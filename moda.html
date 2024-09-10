@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de productos</title>
+    <link rel="icon" href="img/carrito-de-compras.png" type="image/png">
+    <link rel="stylesheet" href="css/categorias.css">
+    <style>
+ 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .categoria-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+   
+        #search-bar {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            padding: 12px;
+            font-size: 1.2em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+     
+        .productos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+            padding: 20px;
+        }
+
+        .producto {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .producto img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .producto p {
+            margin: 10px 0;
+        }
+
+  
+        .add-to-cart {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #218838;
+        }
+
+  
+        @media (max-width: 768px) {
+            .productos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .productos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        #back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            float: right;
+            margin-right: 20px;
+        }
+
+        #back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-banner">
+            <h1>YAKELUME SUPERMARKET</h1>
+            <a id="back-button" href="index.html">Volver al inicio</a>
+
+        </div>
+    </header>
+
+   
+    <input type="text" id="search-bar" placeholder="Buscar productos...">
+
+    <main>
+        <div id="product-list" class="productos">
+      
+        </div>
+    </main>
+
+    <script>
+    
+        const productos = [
+            { nombre: "Abrigo de Piel", precio: "S/583.59", imagen: "img/Abrigo-piel.webp" },
+            { nombre: "Gabardina Formal para Hombre", precio: "$499.00", imagen: "img/Gabardina.webp" },
+            { nombre: "Reloj Smart", precio: "$20.00", imagen: "img/Reloj-smarth.webp" },
+            { nombre: "Camisa Formal", precio: "$25.00", imagen: "img/Camisa.webp" },
+            { nombre: "Cinturón de Cuero", precio: "$20.00", imagen: "img/Cinturon.webp" },
+            { nombre: "Reloj de Pulsera", precio: "$50.00", imagen: "img/Reloj-pulcera.webp" },
+            { nombre: "Gorra de Béisbol", precio: "$10.00", imagen: "img/gorro-de-béisbol.png" },
+            { nombre: "Pantalones Cortos Deportivos", precio: "$20.00", imagen: "img/Casaca-cuero.webp" },
+            { nombre: "Zapatillas Deportivas", precio: "$60.00", imagen: "img/Zapatillas.avif" },
+            { nombre: "Abrigo de Peluche", precio: "$40.79", imagen: "img/Abrigo-peluche.webp" },
+            { nombre: "Casaca de Cuero", precio: "$348.46", imagen: "img/Casaca-cuero.webp" },
+            { nombre: "Blusa de Seda", precio: "$25.00", imagen: "img/Blusa-seda.webp" },
+            { nombre: "Vestido Casual", precio: "$35.00", imagen: "img/Vestido-casual.jpg" },
+            { nombre: "Falda Lápiz", precio: "$30.00", imagen: "img/Falda-lapiz.webp" },
+            { nombre: "Leggings Deportivos", precio: "$20.00", imagen: "img/Leggings.avif" },
+            { nombre: "Zapatos de Tacón Alto", precio: "$50.00", imagen: "img/zapatos-de-tacon-alto.jpeg" },
+            { nombre: "Bolso de Mano", precio: "$40.00", imagen: "img/Bolso.jpg" },
+            { nombre: "Collar de Perlas", precio: "$60.00", imagen: "img/Collar-perlas.webp" }
+        ];
+
+        const productList = document.getElementById('product-list');
+        const searchBar = document.getElementById('search-bar');
+
+       
+        const renderProducts = (productosFiltrados) => {
+            productList.innerHTML = '';
+            productosFiltrados.forEach(producto => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('producto');
+                productDiv.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <p>${producto.nombre}</p>
+                    <p>${producto.precio}</p>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        };
+
+
+        renderProducts(productos);
+
+  
+        searchBar.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const productosFiltrados = productos.filter(producto =>
+                producto.nombre.toLowerCase().includes(query)
+            );
+            renderProducts(productosFiltrados);
+        });
+    </script>
+</body>
+</html>

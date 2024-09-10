@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de productos</title>
+    <link rel="icon" href="img/carrito-de-compras.png" type="image/png">
+    <link rel="stylesheet" href="/css/categorias.css">
+    <style>
+ 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .categoria-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+
+        #search-bar {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            padding: 12px;
+            font-size: 1.2em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+ 
+        .productos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+            padding: 20px;
+        }
+
+        .producto {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .producto img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .producto p {
+            margin: 10px 0;
+        }
+
+
+        .add-to-cart {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #218838;
+        }
+
+       
+        @media (max-width: 768px) {
+            .productos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .productos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        #back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            float: right;
+            margin-right: 20px;
+        }
+
+        #back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-banner">
+            <h1>YAKELUME SUPERMARKET</h1>   
+            <a id="back-button" href="index.html">Volver al inicio</a>
+
+        </div>
+    </header>
+
+    <input type="text" id="search-bar" placeholder="Buscar productos...">
+
+    <main>
+ 
+        <div id="product-list" class="productos">
+          
+        </div>
+    </main>
+
+
+    <script>
+
+        const productos = [
+            { nombre: "Samsung Galaxy S24", precio: "S/4,999", imagen: "../img/Galaxy S24.avif" },
+            { nombre: "Xiaomi Redmi Note 10", precio: "S/830", imagen: "../img/Redmi10.webp" },
+            { nombre: "iPhone 15 Pro Max", precio: "S/7,287", imagen: "../img/iPhone-15-Pro.jpg" },
+            { nombre: "Laptop Acer Intel Core 5", precio: "S/2,799", imagen: "../img/Laptop.avif" },
+            { nombre: "Computadora PC Gamer Ryzen 5", precio: "S/3,499", imagen: "../img/Computadora.webp" },
+            { nombre: "Galaxy Tab S6 Lite", precio: "S/999", imagen: "../img/Tablet.webp" },
+            { nombre: "Audífonos Gamer con Luz LED", precio: "S/109.90", imagen: "../img/Audifonos gamer.avif" },
+            { nombre: "Auriculares Inalámbricos Gamer", precio: "S/41.96", imagen: "../img/Auriculares.webp" },
+            { nombre: "Smart Watch T900 Pro Max", precio: "S/70.00", imagen: "../img/Reloj-smarth.webp" },
+            { nombre: "Parlantes", precio: "$89.00", imagen: "../img/Parlantes.avif" },
+            { nombre: "Despertador Digital", precio: "S/129.00", imagen: "../img/despertador-digital.jpg" },
+            { nombre: "Cámara Eos Rebel T100", precio: "S/2,639.00", imagen: "../img/Cámara.webp" },
+            { nombre: "Alexa Parlante Inteligente", precio: "$269.00", imagen: "../img/Alexa.webp" },
+            { nombre: "Smart TV Samsung 4K", precio: "S/3,299.00", imagen: "../img/TV.webp" },
+            { nombre: "Impresora Brother DCP-T420W", precio: "S/649.90", imagen: "../img/Impresora.webp" },
+            { nombre: "PlayStation 5 Slim", precio: "S/2,599.90", imagen: "../img/PS5.webp" },
+            { nombre: "Scooter Eléctrico Kaabo", precio: "S/4,799.90", imagen: "../img/Scooter.webp" },
+            { nombre: "Anillo Inteligente Smart Ring", precio: "S/66.99", imagen: "../img/Anillo-digital.webp" }
+        ];
+
+        const productList = document.getElementById('product-list');
+        const searchBar = document.getElementById('search-bar');
+
+     
+        const renderProducts = (productosFiltrados) => {
+            productList.innerHTML = ''; 
+            productosFiltrados.forEach(producto => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('producto');
+                productDiv.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <p>${producto.nombre}</p>
+                    <p>${producto.precio}</p>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        };
+
+     
+        renderProducts(productos);
+
+  
+        searchBar.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const productosFiltrados = productos.filter(producto =>
+                producto.nombre.toLowerCase().includes(query)
+            );
+            renderProducts(productosFiltrados);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de productos</title>
+    <link rel="icon" href="img/carrito-de-compras.png" type="image/png">
+    <link rel="stylesheet" href="css/categorias.css">
+    <style>
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .categoria-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .categoria-info h2 {
+            font-size: 1.5em;
+            color: #2c3e50;
+        }
+
+        .categoria-info h3 {
+            font-size: 1.2em;
+            color: #16a085;
+        }
+
+
+        #search-bar {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: 2px solid #16a085;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #search-bar:focus {
+            outline: none;
+            border-color: #1abc9c;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .productos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .producto {
+            background-color: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 280px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .producto img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .producto:hover img {
+            transform: scale(1.1);
+        }
+
+        .producto p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+
+        .producto p:last-child {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+    
+        .add-to-cart {
+            background-color: #16a085;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-to-cart:hover {
+            background-color: #1abc9c;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        }
+
+   
+        @media (max-width: 768px) {
+            .productos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .productos {
+                grid-template-columns: 1fr;
+            }
+
+            .producto {
+                max-width: 100%;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px;
+            background-color: #16a085;
+            color: white;
+            font-size: 1em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+        #back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #00ffb7;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            float: right;
+            margin-right: 20px;
+        }
+
+        #back-button:hover {
+            background-color: #00b37a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-banner">
+            <h1>YAKELUME SUPERMARKET</h1>
+            <a id="back-button" href="index.html">Volver al inicio</a>
+        </div>
+    </header>
+
+   
+    <input type="text" id="search-bar" placeholder="Buscar productos...">
+
+    <main>
+  
+        <div id="product-list" class="productos">
+         
+        </div>
+    </main>
+
+
+    <script>
+  
+        const productos = [
+            { nombre: "Set Desarmadores 5 Piezas Dexter", precio: "S/18.90", imagen: "../img/Desarmadores.jpg" },
+            { nombre: "Set Desarmador 6 en 1 Ratchet Werken", precio: "S/22.40", imagen: "../img/Desarmador 6 en 1.jpg" },
+            { nombre: "Set Desarmadores x4 Piezas Werken", precio: "S/8.90", imagen: "../img/Desarmadores x4 Piezas.jpg" },
+            { nombre: "Juego De Llave Mixta Plana 11 Piezas Bahco", precio: "S/727.00", imagen: "../img/Juego De Llave.jpg" },
+            { nombre: "Juego De Llave Mixta Plana 24 Piezas Bahco", precio: "S/1650.00", imagen: "../img/Juego De Llave Mixta Plana 24.jpg" },
+            { nombre: "Martillo De Carpintero 450g 30mm Dexter", precio: "S/40.90", imagen: "../img/Martillo.jpg" },
+            { nombre: "Hacha 600gr Kamasa", precio: "S/40.90", imagen: "../img/Hacha.jpg" },
+            { nombre: "Wincha Basica Stanley 5 Metros", precio: "S/12.50", imagen: "../img/Wincha Basica.jpg" },
+            { nombre: "Trípode Bt 300 Hd Profesional Bosch", precio: "S/849.00", imagen: "../img/Trípode.jpg" },
+            { nombre: "Set Herramientas Home 17 Piezas Hi Spech", precio: "S/56.60", imagen: "../img/Set Herramientas.jpg" },
+            { nombre: "Llave Para Tubo Stillson 14¨ Bahco", precio: "S/113.90", imagen: "../img/Llave Para Tubo.jpg" },
+            { nombre: "Serrucho Ergo ProfCut 19¨ Bahco", precio: "S/80.00", imagen: "../img/Serrucho Ergo.jpg" },
+            { nombre: "Mazo 890mm 3kg Plastico Dexter", precio: "S/140.90", imagen: "../img/Mazo 890mm.jpg" },
+            { nombre: "Alicate Universal En Acero 6¨ Kamasa", precio: "S/16.90", imagen: "../img/Alicate Universal.jpg" },
+            { nombre: "Set Dados Hexagonal Encastre 3/8¨ 34 Piezas Bahco", precio: "S/435.00", imagen: "../img/Set Dados Hexagonal.jpg" },
+            { nombre: "Set Espatulas Redondo 160mm + Cuadrada 200mm + Recta 10mm", precio: "S/16.90", imagen: "../img/Set Espatulas Redondo.jpg" },
+            { nombre: "Maletin De Herramientas 12¨ STANLEY", precio: "S/36.50", imagen: "../img/Malentin De Herramientas.jpg" },
+            { nombre: "Estuche De Transporte 25Kg Einstell", precio: "S/152.90", imagen: "../img/Estuche De Transporte.jpg" }
+        ];
+
+        const productList = document.getElementById('product-list');
+        const searchBar = document.getElementById('search-bar');
+
+     
+        const renderProducts = (productosFiltrados) => {
+            productList.innerHTML = ''; 
+            productosFiltrados.forEach(producto => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('producto');
+                productDiv.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <p>${producto.nombre}</p>
+                    <p>${producto.precio}</p>
+                    <button class="add-to-cart">Agregar al carrito</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        };
+
+      
+        renderProducts(productos);
+
+
+        searchBar.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const productosFiltrados = productos.filter(producto =>
+                producto.nombre.toLowerCase().includes(query)
+            );
+            renderProducts(productosFiltrados);
+        });
+    </script>
+</body>
+</html>
